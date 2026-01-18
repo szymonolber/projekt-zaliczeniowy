@@ -1,17 +1,26 @@
-name: "ProjektZaliczeniowy"
+name: Szymon Olber - Portfolio
 output_dir: ../docs
 navbar:
-  title: "ProjektZaliczeniowy"
+  title: Szymon Olber | Data Engineering
+  type: inverse
   left:
   - text: Home
+    icon: fa-home
     href: index.html
-  - text: About
-    href: about.html
-  - text: License
-    href: license.html
+  - text: CV
+    icon: fa-id-card
+    href: cv.html
+  - text: Analiza Danych
+    icon: fa-chart-line
+    href: analysis.html
+  - text: Prezentacja
+    icon: fa-desktop
+    href: presentation.html
+  right:
+  - icon: fab fa-github
+    text: Source code
+    href: https://github.com/szymonolber/projekt-zaliczeniowy
 output:
   workflowr::wflow_html:
-    toc: yes
-    toc_float: yes
     theme: cosmo
     highlight: textmate
