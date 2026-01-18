@@ -1,11 +1,27 @@
 ---
-title: "Home"
+title: "Witaj w moim portfolio"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
     toc: false
-editor_options:
-  chunk_output_type: console
 ---
 
-Welcome to my research website.
+<div class="jumbotron">
+  <h1 class="display-4">Cześć, jestem Szymon!</h1>
+  <p class="lead">Student III roku Informatyki i Inżynierii Danych.</p>
+  <hr class="my-4">
+</div>
+
+## 🏫 Moja Uczelnia
+
+Jestem dumny z bycia częścią społeczności akademickiej, która stawia na praktyczne umiejętności.
+
+![Uniwersytet Przyrodniczy w Poznaniu](uczelnia.jpg){width=100%}
+
+---
+
+### ℹ️ Informacje techniczne
+Zgodnie z wymogami projektu zaliczeniowego:
+* Strona została w całości wygenerowana przy użyciu pakietu **workflowr**.
+* Kod źródłowy oraz wyniki są w pełni reprodukowalne.
+* Projekt łączy technologie: R, Markdown, Git oraz Quarto.

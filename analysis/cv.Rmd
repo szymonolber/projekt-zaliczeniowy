@@ -1,0 +1,48 @@
+---
+title: "Curriculum Vitae"
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+---
+
+## 👤 Dane Podstawowe
+
+* **Imię i Nazwisko:** Szymon Olber
+* **Kierunek:** Informatyka i Inżynieria Danych
+* **Status:** Student III roku
+* **Email:** szymonolber2@GMAIL.COM
+
+---
+
+## 🎓 Wykształcenie
+
+### **Uniwersytet Przyrodniczy w Poznaniu**
+*Kierunek: Informatyka i Inżynieria Danych* | *2023 – obecnie*
+
+* Planowana praca dyplomowa związana z modelowaniem predykcyjnym.
+
+---
+
+## 🛠 Umiejętności
+
+| Kategoria | Technologie i Narzędzia |
+|:----------|:------------------------|
+| **Programowanie** | R, Python, SQL, C++ |
+| **Data Science** | Tidyverse (dplyr, ggplot2), Pandas, Scikit-learn |
+| **Narzędzia** | Git/GitHub, Docker, Workflowr, Quarto |
+| **Soft Skills** | Zarządzanie czasem , Analityczne myślenie |
+
+---
+
+## 💼 Doświadczenie i Projekty
+
+### **Projekt: Kompleksowa Analiza Rynku Diamentów**
+*Styczeń 2026*
+* Stworzenie reprodukowalnego raportu w R (Workflowr).
+* Zastosowanie zaawansowanej wizualizacji danych (ggplot2).
+* Automatyzacja procesu raportowania.
+
+### **Projekty Studenckie**
+* Implementacja algorytmów sortowania w C++.
+* Bazy danych: Projektowanie struktury i optymalizacja zapytań SQL.

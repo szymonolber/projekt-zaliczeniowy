@@ -1,0 +1,129 @@
+---
+title: "Analiza Danych: Rynek Diamentów"
+output:
+  workflowr::wflow_html:
+    code_folding: show
+    toc: true
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+library(DT) # Do ładnych tabel
+
+```
+
+## 1. Opis zbioru danych
+
+W tej sekcji analizuję zbiór `diamonds` dostępny w pakiecie `ggplot2`.
+Zbiór zawiera dane o **53 940** diamentach.
+
+**Kluczowe zmienne:**
+
+* `price`: cena w dolarach amerykańskich ($),
+* `carat`: waga diamentu,
+* `cut`: jakość szlifu (Fair, Good, Very Good, Premium, Ideal),
+* `clarity`: czystość diamentu.
+
+Celem analizy jest sprawdzenie, co najbardziej wpływa na cenę diamentu.
+
+---
+
+## 2. Przetwarzanie danych (dplyr)
+
+Wykonuję następujące operacje (Data Wrangling):
+
+1. **Filter**: Odrzucam diamenty najtańsze (< 300$) i najdroższe (> 18000$), aby usunąć wartości skrajne.
+2. **Mutate**: Tworzę nową zmienną `price_per_carat` (cena za karat).
+3. **Group_by & Summarise**: Grupuję dane po jakości szlifu (`cut`), aby obliczyć średnią cenę.
+
+```{r data_wrangling}
+diamonds_clean <- diamonds %>%
+  filter(price >= 300 & price <= 18000) %>%
+  mutate(price_per_carat = price / carat)
+
+# Agregacja danych
+diamonds_summary <- diamonds_clean %>%
+  group_by(cut) %>%
+  summarise(
+    srednia_cena = mean(price),
+    srednia_cena_za_karat = mean(price_per_carat),
+    liczba = n()
+  ) %>%
+  arrange(desc(srednia_cena_za_karat))
+
+# Wyświetlenie interaktywnej tabeli
+datatable(diamonds_summary, caption = "Podsumowanie cen wg szlifu")
+
+```
+
+---
+
+## 3. Wizualizacje (ggplot2)
+
+### Wykres 1: Rozkład cen diamentów (Histogram)
+
+Sprawdzamy, jak często występują poszczególne ceny.
+
+```{r plot_hist}
+ggplot(diamonds_clean, aes(x = price)) +
+  geom_histogram(binwidth = 500, fill = "#69b3a2", color = "#e9ecef") +
+  labs(
+    title = "Rozkład cen diamentów",
+    subtitle = "Większość diamentów kosztuje poniżej 5000$",
+    x = "Cena ($)",
+    y = "Liczba diamentów"
+  ) +
+  theme_minimal()
+
+```
+
+**Interpretacja:** Rozkład jest prawoskośny. Najwięcej diamentów to te "tańsze", co jest naturalne dla dóbr luksusowych.
+
+---
+
+### Wykres 2: Cena a waga (Scatter Plot)
+
+Czy większy diament zawsze oznacza wyższą cenę? Kolory oznaczają jakość szlifu.
+
+```{r plot_scatter}
+# Biorę próbkę 1000 losowych punktów, żeby wykres był czytelniejszy
+set.seed(123)
+diamonds_sample <- diamonds_clean %>% sample_n(1000)
+
+ggplot(diamonds_sample, aes(x = carat, y = price, color = cut)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(
+    title = "Zależność ceny od wagi (karatów)",
+    x = "Waga (karaty)",
+    y = "Cena ($)",
+    color = "Szlif"
+  ) +
+  theme_light()
+
+```
+
+**Interpretacja:** Istnieje silna korelacja dodatnia. Co ciekawe, diamenty o szlifie "Ideal" (żółte) często osiągają wyższe ceny przy tej samej wadze niż diamenty o gorszym szlifie.
+
+---
+
+### Wykres 3: Ceny w zależności od czystości (Boxplot)
+
+Analiza pudełkowa dla zmiennej kategorycznej `clarity`.
+
+```{r plot_box}
+ggplot(diamonds_clean, aes(x = clarity, y = price, fill = clarity)) +
+  geom_boxplot() +
+  labs(
+    title = "Rozkład cen względem czystości (Clarity)",
+    x = "Czystość (od najgorszej I1 do najlepszej IF)",
+    y = "Cena ($)"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+```
+
+**Interpretacja:** Paradoksalnie, diamenty o niższej czystości (np. SI2) mają często wyższe mediany cen. Wynika to z faktu, że często są to po prostu bardzo duże kamienie (waga dominuje nad czystością w ustalaniu ceny).
+
